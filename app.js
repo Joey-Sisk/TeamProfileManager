@@ -16,20 +16,88 @@ let employee = [
   {
     type: "input",
     name: "name",
-    message: ""
+    message: "Name:"
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "ID:"
   },
   {
     type: "input",
     name: "email",
-    message: ""
+    message: "Email:"
+  }
+];
+
+let manager = [
+  {
+    type: "input",
+    name: "name",
+    message: "Name:"
   },
   {
     type: "input",
-    name: "",
-    message: ""
+    name: "id",
+    message: "ID:"
   },
-]
+  {
+    type: "input",
+    name: "email",
+    message: "Email:"
+  },
+  {
+    type: "input",
+    name: "officeNumber",
+    message: "Office Number:"
+  }
+];
 
+let engineer = [
+  {
+    type: "input",
+    name: "name",
+    message: "Name:"
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "ID:"
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "Email:"
+  },
+  {
+    type: "input",
+    name: "github",
+    message: "Github:"
+  }
+];
+
+let intern = [
+  {
+    type: "input",
+    name: "name",
+    message: "Name:"
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "ID:"
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "Email:"
+  },
+  {
+    type: "input",
+    name: "school",
+    message: "School:"
+  }
+];
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
