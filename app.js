@@ -1,6 +1,7 @@
+const Employee = require("./lib/Employee")
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+const Intern = require("./lib/Intern.js");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -16,87 +17,87 @@ let employee = [
   {
     type: "input",
     name: "name",
-    message: "Name:"
+    message: "Name:",
   },
   {
     type: "input",
     name: "id",
-    message: "ID:"
+    message: "ID:",
   },
   {
     type: "input",
     name: "email",
-    message: "Email:"
-  }
+    message: "Email:",
+  },
 ];
 
 let manager = [
   {
     type: "input",
     name: "name",
-    message: "Name:"
+    message: "Name:",
   },
   {
     type: "input",
     name: "id",
-    message: "ID:"
+    message: "ID:",
   },
   {
     type: "input",
     name: "email",
-    message: "Email:"
+    message: "Email:",
   },
   {
     type: "input",
     name: "officeNumber",
-    message: "Office Number:"
-  }
+    message: "Office Number:",
+  },
 ];
 
 let engineer = [
   {
     type: "input",
     name: "name",
-    message: "Name:"
+    message: "Name:",
   },
   {
     type: "input",
     name: "id",
-    message: "ID:"
+    message: "ID:",
   },
   {
     type: "input",
     name: "email",
-    message: "Email:"
+    message: "Email:",
   },
   {
     type: "input",
     name: "github",
-    message: "Github:"
-  }
+    message: "Github:",
+  },
 ];
 
 let intern = [
   {
     type: "input",
     name: "name",
-    message: "Name:"
+    message: "Name:",
   },
   {
     type: "input",
     name: "id",
-    message: "ID:"
+    message: "ID:",
   },
   {
     type: "input",
     name: "email",
-    message: "Email:"
+    message: "Email:",
   },
   {
     type: "input",
     name: "school",
-    message: "School:"
-  }
+    message: "School:",
+  },
 ];
 
 // Write code to use inquirer to gather information about the development team members,
@@ -122,7 +123,6 @@ let intern = [
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-/*
 inquirer
   .prompt(questions)
   .then((answers) => {
@@ -133,4 +133,3 @@ inquirer
   .catch((error) => {
     console.log(error);
   });
-  /*
