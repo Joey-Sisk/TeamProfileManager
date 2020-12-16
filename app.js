@@ -1,4 +1,4 @@
-const Employee = require("./lib/Employee")
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern.js");
@@ -12,6 +12,37 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 // const writeAsync = util.promisify(fs.writeFile);
+
+const questions = {
+  employeeQuestions: () => {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "Name:",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "ID:",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Email:",
+      },
+    ]);
+  },
+  managerQuestion: () => {
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "officeNumber",
+        message: "Office Number:",
+      },
+    ]);
+  },
+};
 
 let employee = [
   {
@@ -123,13 +154,23 @@ let intern = [
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
+/*
 inquirer
-  .prompt(questions)
-  .then((answers) => {
-    const template = readmeTemplate(answers);
+  .prompt(employeeQuestions)
+  .then(const managerChoice () => {
+    if (engineer) {
 
-    writeAsync("", template);
+    } else if (intern) {
+
+    } else {
+
+    }
+    }
+    //(answers) => {
+    //const template = readmeTemplate(answers);
+    //writeAsync("", template);
   })
   .catch((error) => {
     console.log(error);
   });
+  */
