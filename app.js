@@ -16,6 +16,10 @@ const render = require("./lib/htmlRenderer");
 // questions.employeeQuestions()
 // question.managerQuestion()
 
+let chosedRole = "Manager"
+let chosenName = "officeNumber";
+let chosenMessage = "Office Number:";
+
 const questions = {
   employeeQuestions: () => {
     inquirer.prompt([
@@ -35,116 +39,54 @@ const questions = {
         message: "Email:",
       },
       {
+        type: "input",
+        name: chosenName,
+        message: chosenMessage,
+      },
+      {
         type: "list",
         name: "listChoice",
         message: "Which license type are you using?:",
-        choices: ["Engineer", "Intern", "Manager"],
+        choices: ["Engineer", "Intern", "End"],
       }
     ]).then((response) => {
       switch (response.listChoice) {
-        case "manager"
+        case "Engineer":
+          chosenName = questions.engineerQuestion.name;
+          chosenMessage = questions.engineerQuestion.message;
+          team.push(new Intern("calvin", "UT Austin"));
+          questions.employeeQuestions();
+          break;
+        case "intern":
+           chosenName = questions.internQuestion.name;
+           chosenMessage = questions.engineerQuestion.message;
+           team.push(new Intern("calvin", "UT Austin"));
+           questions.employeeQuestions();
+           break;
+        default:
+          return render();
       }
     });
   },
-  managerQuestion: () => {
-    inquirer.prompt([
-      {
-        type: "input",
-        name: "officeNumber",
-        message: "Office Number:",
-      },
-    ]);
-  },
-};
-
-
-
-let employee = [
+  managerQuestion:
   {
-    type: "input",
-    name: "name",
-    message: "Name:",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "ID:",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "Email:",
-  },
-];
-
-let manager = [
-  {
-    type: "input",
-    name: "name",
-    message: "Name:",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "ID:",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "Email:",
-  },
-  {
-    type: "input",
+    role: "Manager",
     name: "officeNumber",
     message: "Office Number:",
   },
-];
-
-let engineer = [
+  engineerQuestion:
   {
-    type: "input",
-    name: "name",
-    message: "Name:",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "ID:",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "Email:",
-  },
-  {
-    type: "input",
+    role:"Engineer",
     name: "github",
     message: "Github:",
   },
-];
-
-let intern = [
+  internQuestion:
   {
-    type: "input",
-    name: "name",
-    message: "Name:",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "ID:",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "Email:",
-  },
-  {
-    type: "input",
+    role: "Intern",
     name: "school",
-    message: "School:",
-  },
-];
+    message: "School",
+  }
+},
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -168,24 +110,3 @@ let intern = [
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
-
-/*
-inquirer
-  .prompt(employeeQuestions)
-  .then(const managerChoice () => {
-    if (engineer) {
-
-    } else if (intern) {
-
-    } else {
-
-    }
-    }
-    //(answers) => {
-    //const template = readmeTemplate(answers);
-    //writeAsync("", template);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-  */
