@@ -52,7 +52,7 @@ prompt({
 
   if user selects engineers
     ask engineer questions => promptEngineer()
-  else if user selects inters
+  else if user selects interns
     ask intern questions
   else
     render html (there is a render method)
@@ -81,3 +81,4 @@ function askIntern() {
   });
 }
 */
+

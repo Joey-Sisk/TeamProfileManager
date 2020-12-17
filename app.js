@@ -13,6 +13,9 @@ const render = require("./lib/htmlRenderer");
 
 // const writeAsync = util.promisify(fs.writeFile);
 
+// questions.employeeQuestions()
+// question.managerQuestion()
+
 const questions = {
   employeeQuestions: () => {
     inquirer.prompt([
@@ -31,7 +34,17 @@ const questions = {
         name: "email",
         message: "Email:",
       },
-    ]);
+      {
+        type: "list",
+        name: "listChoice",
+        message: "Which license type are you using?:",
+        choices: ["Engineer", "Intern", "Manager"],
+      }
+    ]).then((response) => {
+      switch (response.listChoice) {
+        case "manager"
+      }
+    });
   },
   managerQuestion: () => {
     inquirer.prompt([
@@ -43,6 +56,8 @@ const questions = {
     ]);
   },
 };
+
+
 
 let employee = [
   {
