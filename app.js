@@ -1,4 +1,3 @@
-const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern.js");
@@ -11,82 +10,95 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// const writeAsync = util.promisify(fs.writeFile);
-
-// questions.employeeQuestions()
-// question.managerQuestion()
-
-let chosedRole = "Manager"
-let chosenName = "officeNumber";
-let chosenMessage = "Office Number:";
+let currentRole = "Manager";
+let currentName = "officeNumber";
+let currentMessage = "Office Number:";
 
 const questions = {
   employeeQuestions: () => {
-    inquirer.prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "Name:",
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "ID:",
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "Email:",
-      },
-      {
-        type: "input",
-        name: chosenName,
-        message: chosenMessage,
-      },
-      {
-        type: "list",
-        name: "listChoice",
-        message: "Which license type are you using?:",
-        choices: ["Engineer", "Intern", "End"],
-      }
-    ]).then((response) => {
-      switch (response.listChoice) {
-        case "Engineer":
-          chosenName = questions.engineerQuestion.name;
-          chosenMessage = questions.engineerQuestion.message;
-          team.push(new Intern("calvin", "UT Austin"));
-          questions.employeeQuestions();
-          break;
-        case "intern":
-           chosenName = questions.internQuestion.name;
-           chosenMessage = questions.engineerQuestion.message;
-           team.push(new Intern("calvin", "UT Austin"));
-           questions.employeeQuestions();
-           break;
-        default:
-          return render();
-      }
-    });
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "name",
+          message: "Name:",
+        },
+        {
+          type: "input",
+          name: "id",
+          message: "ID:",
+        },
+        {
+          type: "input",
+          name: "email",
+          message: "Email:",
+        },
+        {
+          type: "input",
+          name: currentName,
+          message: currentMessage,
+        },
+        {
+          type: "list",
+          name: "listChoice",
+          message: "Which license type are you using?:",
+          choices: ["Engineer", "Intern", "Print Summary"],
+        },
+      ])
+      .then((response) => {
+        switch (response.listChoice) {
+          case "Engineer":
+            currentRole = this.engineerQuestion.role;
+            currentName = this.engineerQuestion.name;
+            currentMessage = this.engineerQuestion.message;
+            // makeNewEmployee();
+            // team.push(new Intern("calvin", "UT Austin"));
+            questions.employeeQuestions();
+            break;
+          case "Intern":
+            currentRole = this.internQuestion.role;
+            currentName = this.internQuestion.name;
+            currentMessage = this.internQuestion.message;
+            // makeNewEmployee();
+            // team.push(new Intern("calvin", "UT Austin"));
+            questions.employeeQuestions();
+            break;
+          default:
+            return render();
+        }
+      });
   },
-  managerQuestion:
-  {
+  managerQuestion: {
     role: "Manager",
     name: "officeNumber",
     message: "Office Number:",
   },
-  engineerQuestion:
-  {
-    role:"Engineer",
+  engineerQuestion: {
+    role: "Engineer",
     name: "github",
     message: "Github:",
   },
-  internQuestion:
-  {
+  internQuestion: {
     role: "Intern",
     name: "school",
     message: "School",
-  }
-},
+  },
+  roleSelector() {
+    switch (currentRole) {
+      case "Engineer":
+        return Engineer;
+      case "Intern":
+        return Intern;
+      default:
+        return Manager;
+    }
+  },
+  // makeNewEmployee: () => {
+  //   const newEmployee = new this.roleSelector (data.name, data.id, data.email, data./* unique data */)
+  // },
+};
+
+questions.employeeQuestions();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
