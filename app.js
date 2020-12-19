@@ -47,11 +47,17 @@ const questions = {
           choices: ["Engineer", "Intern", "Print Summary"],
         },
       ])
-      .then(answers => {
-        teamMembers.push(questions.pushEmployees());
-      })
-      .then((response) => {
-        switch (response.listChoice) {
+      .then((answers) => {
+        const newEmployee = roleSelector(
+          answers.name,
+          answers.id,
+          answers.email,
+          currentName
+        );
+
+        teamMembers.push(newEmployee);
+
+        switch (answers.listChoice) {
           case "Engineer":
             currentName = questions.engineerQuestion.name;
             currentMessage = questions.engineerQuestion.message;
@@ -83,17 +89,7 @@ const questions = {
     name: "school",
     message: "School",
   },
-  roleSelector() {
-    switch (currentRole) {
-      case "Engineer":
-        return Engineer;
-      case "Intern":
-        return Intern;
-      default:
-        return Manager;
-    }
-  },
-  pushEmployees() {
+  pushEmployees(answers) {
     const newEmployee = new this.roleSelector(
       answers.name,
       answers.id,
@@ -108,6 +104,17 @@ const questions = {
     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
   },
 };
+
+function roleSelector() {
+  switch (currentRole) {
+    case "Engineer":
+      return new Engineer(answers.name, answers.id, answers.email, currentName);
+    case "Intern":
+      return new Intern(answers.name, answers.id, answers.email, currentName);
+    default:
+      return new Manager(answers.name, answers.id, answers.email, currentName);
+  }
+}
 
 questions.employeeQuestions();
 
