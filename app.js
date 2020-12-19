@@ -1,6 +1,6 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern.js");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -9,6 +9,8 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+
+const teamMembers = [];
 
 let currentRole = "Manager";
 let currentName = "officeNumber";
@@ -45,26 +47,24 @@ const questions = {
           choices: ["Engineer", "Intern", "Print Summary"],
         },
       ])
+      .then(answers => {
+        teamMembers.push(questions.pushEmployees());
+      })
       .then((response) => {
         switch (response.listChoice) {
           case "Engineer":
-            currentRole = this.engineerQuestion.role;
-            currentName = this.engineerQuestion.name;
-            currentMessage = this.engineerQuestion.message;
-            // makeNewEmployee();
-            // team.push(new Intern("calvin", "UT Austin"));
+            currentName = questions.engineerQuestion.name;
+            currentMessage = questions.engineerQuestion.message;
             questions.employeeQuestions();
             break;
           case "Intern":
-            currentRole = this.internQuestion.role;
-            currentName = this.internQuestion.name;
-            currentMessage = this.internQuestion.message;
-            // makeNewEmployee();
-            // team.push(new Intern("calvin", "UT Austin"));
+            currentName = questions.internQuestion.name;
+            currentMessage = questions.internQuestion.message;
             questions.employeeQuestions();
             break;
           default:
-            return render();
+            questions.createOutput();
+            break;
         }
       });
   },
@@ -93,9 +93,20 @@ const questions = {
         return Manager;
     }
   },
-  // makeNewEmployee: () => {
-  //   const newEmployee = new this.roleSelector (data.name, data.id, data.email, data./* unique data */)
-  // },
+  pushEmployees() {
+    const newEmployee = new this.roleSelector(
+      answers.name,
+      answers.id,
+      answers.email,
+      answers(currentName)
+    );
+  },
+  createOutput() {
+    if (!fs.existsSync(OUTPUT_DIR, "output")) {
+      fs.mkdirSync(OUTPUT_DIR);
+    }
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+  },
 };
 
 questions.employeeQuestions();
