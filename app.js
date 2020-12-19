@@ -37,7 +37,7 @@ const questions = {
         },
         {
           type: "input",
-          name: currentName,
+          name: "uniqueQuestion",
           message: currentMessage,
         },
         {
@@ -48,22 +48,25 @@ const questions = {
         },
       ])
       .then((answers) => {
+
         const newEmployee = roleSelector(
           answers.name,
           answers.id,
           answers.email,
-          currentName
+          answers.uniqueQuestion
         );
 
         teamMembers.push(newEmployee);
 
         switch (answers.listChoice) {
           case "Engineer":
+            currentRole = questions.engineerQuestion.role;
             currentName = questions.engineerQuestion.name;
             currentMessage = questions.engineerQuestion.message;
             questions.employeeQuestions();
             break;
           case "Intern":
+            currentRole = questions.internQuestion.role;
             currentName = questions.internQuestion.name;
             currentMessage = questions.internQuestion.message;
             questions.employeeQuestions();
@@ -73,11 +76,6 @@ const questions = {
             break;
         }
       });
-  },
-  managerQuestion: {
-    role: "Manager",
-    name: "officeNumber",
-    message: "Office Number:",
   },
   engineerQuestion: {
     role: "Engineer",
@@ -89,14 +87,6 @@ const questions = {
     name: "school",
     message: "School",
   },
-  pushEmployees(answers) {
-    const newEmployee = new this.roleSelector(
-      answers.name,
-      answers.id,
-      answers.email,
-      answers(currentName)
-    );
-  },
   createOutput() {
     if (!fs.existsSync(OUTPUT_DIR, "output")) {
       fs.mkdirSync(OUTPUT_DIR);
@@ -105,14 +95,14 @@ const questions = {
   },
 };
 
-function roleSelector() {
+function roleSelector(name, id, email, uniqueQuestion) {
   switch (currentRole) {
     case "Engineer":
-      return new Engineer(answers.name, answers.id, answers.email, currentName);
+      return new Engineer(name, id, email, uniqueQuestion);
     case "Intern":
-      return new Intern(answers.name, answers.id, answers.email, currentName);
+      return new Intern(name, id, email, uniqueQuestion);
     default:
-      return new Manager(answers.name, answers.id, answers.email, currentName);
+      return new Manager(name, id, email, uniqueQuestion);
   }
 }
 
