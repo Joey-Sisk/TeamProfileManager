@@ -1,33 +1,36 @@
-const Manager = require("./lib/Manager");
+const Manager = require("./lib/Manager"); // connects all class constructors
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const OUTPUT_DIR = path.resolve(__dirname, "output"); // creates output folder
+const outputPath = path.join(OUTPUT_DIR, "team.html"); // creates html file in output folder
 
-const render = require("./lib/htmlRenderer");
+const render = require("./lib/htmlRenderer"); // connects to htmlRenderer.js
 
-const teamMembers = [];
+const teamMembers = []; // an array of the objects created from the class contructors
 
-let currentRole = "Manager";
-let currentName = "officeNumber";
+let currentRole = "Manager"; // updates variable question based on which employee type is being entered
 let currentMessage = "What is the Office Number for this Manager?";
 
 console.log("Answer the questions to enter information for your Employee's.");
 console.log("The first round of questions will be for your Manager.");
 
 const questions = {
+  // primary parent array
   employeeQuestions: () => {
+    // called when app.js is run in terminal
     inquirer
       .prompt([
+        // employee questions, handled with inquierer
         {
           type: "input",
           name: "name",
           message: `What is the name of this ${currentRole}?`,
           validate: (answer) => {
+            // validates that user entered characters
             if (answer !== "") {
               return true;
             }
@@ -39,7 +42,7 @@ const questions = {
           name: "id",
           message: `What is the ID number for this ${currentRole}?`,
           validate: (answer) => {
-            const pass = answer.match(/^[0-9]\d*$/);
+            const pass = answer.match(/^[0-9]\d*$/); // uses regular expressions to check if numbers were entered
             if (pass) {
               return true;
             }
@@ -51,7 +54,7 @@ const questions = {
           name: "email",
           message: `What is th email for this ${currentRole}?`,
           validate: (answer) => {
-            const pass = answer.match(/\S+@\S+\.\S+/);
+            const pass = answer.match(/\S+@\S+\.\S+/); // regular expressions check email format
             if (pass) {
               return true;
             }
@@ -61,7 +64,7 @@ const questions = {
         {
           type: "input",
           name: "uniqueQuestion",
-          message: currentMessage,
+          message: currentMessage, // changes in switch statement based on next question
           validate: (answer) => {
             if (answer !== "") {
               return true;
@@ -73,10 +76,10 @@ const questions = {
           type: "list",
           name: "listChoice",
           message: "Which employee type will you enter next?",
-          choices: ["Engineer", "Intern", "Print Summary"],
+          choices: ["Engineer", "Intern", "Print Summary"], // only 1 manager neccesary
         },
       ])
-      .then((answers) => {
+      .then((answers) => { // passes answers into class constructor
         const newEmployee = roleSelector(
           answers.name,
           answers.id,
@@ -84,50 +87,46 @@ const questions = {
           answers.uniqueQuestion
         );
 
-        teamMembers.push(newEmployee);
+        teamMembers.push(newEmployee); // sends object into the array
 
-        switch (answers.listChoice) {
+        switch (answers.listChoice) { // updates variable question and starts questions over
           case "Engineer":
             currentRole = questions.engineerQuestion.role;
-            currentName = questions.engineerQuestion.name;
             currentMessage = questions.engineerQuestion.message;
             questions.employeeQuestions();
             break;
           case "Intern":
             currentRole = questions.internQuestion.role;
-            currentName = questions.internQuestion.name;
             currentMessage = questions.internQuestion.message;
             questions.employeeQuestions();
             break;
-          default:
+          default: 
             console.log(
               "Look in the output folder for your Employee Team Summary page."
             );
-            questions.createOutput();
+            questions.createOutput();// sends array to renderer
             break;
         }
       });
   },
-  engineerQuestion: {
+  engineerQuestion: { // stored for updating variable question
     role: "Engineer",
-    name: "github",
     message: "What is the github adress for your Engineer?:",
   },
   internQuestion: {
     role: "Intern",
-    name: "school",
     message: "Which school is your Intern from?",
   },
-  createOutput() {
+  createOutput() { // checks if output folder exists, if not creates folder
     if (!fs.existsSync(OUTPUT_DIR, "output")) {
       fs.mkdirSync(OUTPUT_DIR);
     }
-    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8"); // sends data to and writes team.html
   },
 };
 
-function roleSelector(name, id, email, uniqueQuestion) {
-  switch (currentRole) {
+function roleSelector(name, id, email, uniqueQuestion) { 
+  switch (currentRole) { // connects current class constructor and sends data through
     case "Engineer":
       return new Engineer(name, id, email, uniqueQuestion);
     case "Intern":
@@ -137,7 +136,7 @@ function roleSelector(name, id, email, uniqueQuestion) {
   }
 }
 
-questions.employeeQuestions();
+questions.employeeQuestions(); // runs code from the inquirer questions when called in CLI
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
