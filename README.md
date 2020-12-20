@@ -25,6 +25,7 @@ This node.js based program is designed to generate a HTML webpage that displays 
 
 ## Screenshot
 
+![Finished Page](./images/screenshot3.jpg)
 ![Top of code](./images/screenshot.jpg)
 ![Testing Validation](./images/screenshot2.jpg)
 
