@@ -14,7 +14,10 @@ const teamMembers = [];
 
 let currentRole = "Manager";
 let currentName = "officeNumber";
-let currentMessage = "Office Number:";
+let currentMessage = "What is the Office Number for this Manager?";
+
+console.log("Answer the questions to enter information for your Employee's.");
+console.log("The first round of questions will be for your Manager.");
 
 const questions = {
   employeeQuestions: () => {
@@ -23,17 +26,17 @@ const questions = {
         {
           type: "input",
           name: "name",
-          message: "Name:",
+          message: `What is the name of this ${currentRole}?`,
         },
         {
           type: "input",
           name: "id",
-          message: "ID:",
+          message: `What is the ID number for this ${currentRole}?`,
         },
         {
           type: "input",
           name: "email",
-          message: "Email:",
+          message: `What is th email for this ${currentRole}?`,
         },
         {
           type: "input",
@@ -43,12 +46,11 @@ const questions = {
         {
           type: "list",
           name: "listChoice",
-          message: "Which license type are you using?:",
+          message: "Which employee type will you enter next?",
           choices: ["Engineer", "Intern", "Print Summary"],
         },
       ])
       .then((answers) => {
-
         const newEmployee = roleSelector(
           answers.name,
           answers.id,
@@ -72,6 +74,7 @@ const questions = {
             questions.employeeQuestions();
             break;
           default:
+            console.log("Look in the output folder for your Employee Team Summary page.");
             questions.createOutput();
             break;
         }
@@ -80,12 +83,12 @@ const questions = {
   engineerQuestion: {
     role: "Engineer",
     name: "github",
-    message: "Github:",
+    message: "What is the github adress for your Engineer?:",
   },
   internQuestion: {
     role: "Intern",
     name: "school",
-    message: "School",
+    message: "Which school is your Intern from?",
   },
   createOutput() {
     if (!fs.existsSync(OUTPUT_DIR, "output")) {
