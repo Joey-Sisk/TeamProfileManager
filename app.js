@@ -39,7 +39,7 @@ const questions = {
           name: "id",
           message: `What is the ID number for this ${currentRole}?`,
           validate: (answer) => {
-            const pass = answer.match(/^[1-9]\d*$/);
+            const pass = answer.match(/^[0-9]\d*$/);
             if (pass) {
               return true;
             }
