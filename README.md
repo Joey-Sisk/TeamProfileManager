@@ -25,8 +25,8 @@ This node.js based program is designed to generate a HTML webpage that displays 
 
 ## Screenshot
 
-![Profile Header](./images/screenshot.png)
-![Profile Header](./images/screenshot2.png)
+![Top of code](./images/screenshot.jpg)
+![Testing Validation](./images/screenshot2.jpg)
 
 ## Video
 
