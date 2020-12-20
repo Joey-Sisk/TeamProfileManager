@@ -27,21 +27,47 @@ const questions = {
           type: "input",
           name: "name",
           message: `What is the name of this ${currentRole}?`,
+          validate: (answer) => {
+            if (answer !== "") {
+              return true;
+            }
+            return "Please enter at least one character.";
+          },
         },
         {
           type: "input",
           name: "id",
           message: `What is the ID number for this ${currentRole}?`,
+          validate: (answer) => {
+            const pass = answer.match(/^[1-9]\d*$/);
+            if (pass) {
+              return true;
+            }
+            return "Please enter a positive number greater than zero.";
+          },
         },
         {
           type: "input",
           name: "email",
           message: `What is th email for this ${currentRole}?`,
+          validate: (answer) => {
+            const pass = answer.match(/\S+@\S+\.\S+/);
+            if (pass) {
+              return true;
+            }
+            return "Please enter a valid email address.";
+          },
         },
         {
           type: "input",
           name: "uniqueQuestion",
           message: currentMessage,
+          validate: (answer) => {
+            if (answer !== "") {
+              return true;
+            }
+            return "Please enter at least one character.";
+          },
         },
         {
           type: "list",
@@ -74,7 +100,9 @@ const questions = {
             questions.employeeQuestions();
             break;
           default:
-            console.log("Look in the output folder for your Employee Team Summary page.");
+            console.log(
+              "Look in the output folder for your Employee Team Summary page."
+            );
             questions.createOutput();
             break;
         }

@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Pseudo and notes
+testAndPseudo.js
+
+#Included Requirements dir
+requirements
